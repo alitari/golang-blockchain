@@ -1,5 +1,7 @@
 package blockchain
 
+import "log"
+
 type BlockChain struct {
 	Blocks []*Block
 }
@@ -12,13 +14,14 @@ type Block struct {
 }
 
 func CreateBlock(data string, prevHash []byte) *Block {
+	log.Printf("start creating Block with data: '%s' and prevHash: '%v' ...", data, prevHash)
 	block := &Block{ Data: []byte(data), PrevHash:  prevHash}
 	pow := NewProof(block)
 	nonce, hash := pow.Run()
 
 	block.Hash = hash[:]
 	block.Nonce = nonce
-
+	log.Printf("Block created with: Hash '%v' and Nonce: '%d'", hash, nonce)
 	return block
 }
 

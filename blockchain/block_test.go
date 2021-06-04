@@ -41,7 +41,6 @@ func TestMain(m *testing.M) {
 func TestCreateBlock(t *testing.T) {
 	data := randString(10)
 	prevHash := randBytes(12)
-	t.Logf("start creating Block with data: '%s' and prevHash: '%v'", data, prevHash)
 	block := CreateBlock(data, prevHash)
 	if block.Hash == nil {
 		t.Errorf("block.Hash must not be nil")
@@ -52,9 +51,6 @@ func TestCreateBlock(t *testing.T) {
 	if !bytes.Equal(block.Hash[:2], []byte{0, 0}) {
 		t.Errorf("block.Hash must start with 2 zeros, but is %v", block.Hash)
 	}
-
-	t.Logf("Block.Nonce: '%v'", block.Nonce)
-	
 }
 
 func TestAddBlock(t *testing.T) {
