@@ -36,7 +36,7 @@ func NewProof(b *Block) *ProofOfWork {
 	return pow
 }
 
-func (pow *ProofOfWork) InitData(nonce int) []byte {
+func (pow *ProofOfWork) initData(nonce int) []byte {
 	data := bytes.Join(
 		[][]byte{
 			pow.Block.PrevHash,
@@ -57,7 +57,7 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 	nonce := 0
 
 	for nonce < math.MaxInt64 {
-		data := pow.InitData(nonce)
+		data := pow.initData(nonce)
 		hash = sha256.Sum256(data)
 
 		// fmt.Printf("\r%x", hash)
@@ -78,7 +78,7 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 func (pow *ProofOfWork) Validate() bool {
 	var intHash big.Int
 
-	data := pow.InitData(pow.Block.Nonce)
+	data := pow.initData(pow.Block.Nonce)
 
 	hash := sha256.Sum256(data)
 	intHash.SetBytes(hash[:])
