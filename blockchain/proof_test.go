@@ -48,7 +48,7 @@ func TestInitData(t *testing.T) {
 	block := &Block{ Data: []byte(data), PrevHash:  prevHash}
 	pow := NewProof(block)
 	nonce := 1
-	powData := pow.initData(nonce)
+	powData := pow.InitData(nonce)
 	expectedPowdata := []byte{1, 2, 3, 65, 108, 101, 120, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 18}
 
 	if !bytes.Equal(powData, expectedPowdata) {
