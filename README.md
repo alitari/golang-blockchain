@@ -15,7 +15,16 @@ class Block {
     Nonce int
 }
 
-BlockChain "1" *-- "*" Block
+BlockChain "1" *-- "*" Block : Blocks
+
+class ProofOfWork {
+    Block  *Block
+	Target *big.Int
+    Run() (int, []byte)
+}
+note right of ProofOfWork : Run(): tries to build hashes \n from block with different nounces \n until hash equals target
+
+ProofOfWork  o-- "1" Block : Block
 @enduml
 ```
 
