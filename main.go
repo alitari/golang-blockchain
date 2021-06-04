@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"strconv"
 
-	"github.com/tensor-programming/golang-blockchain/blockchain"
+	"github.com/alitari/golang-blockchain/blockchain"
 )
 
 type CommandLine struct {
@@ -88,7 +88,7 @@ func (cli *CommandLine) run() {
 func main() {
 	defer os.Exit(0)
 	chain := blockchain.InitBlockChain()
-	defer chain.Database.Close()
+	// defer chain.Database.Close()
 
 	cli := CommandLine{chain}
 	cli.run()
