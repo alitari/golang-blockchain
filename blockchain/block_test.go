@@ -6,6 +6,8 @@ import (
 	"os"
 	"testing"
 	"time"
+
+	// "github.com/dgraph-io/badger"
 )
 
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
@@ -57,15 +59,14 @@ func TestAddBlock(t *testing.T) {
 	data := "Alex"
 	blockchain := InitBlockChain()
 	blockchain.AddBlock(data)
-	// expectedHash := []byte{0, 0, 46, 20, 255, 167, 59, 134, 22, 147, 164, 255, 65, 183, 39, 143, 211, 114, 126, 176, 3, 165, 92, 179, 73, 143, 182, 56, 110, 59, 148, 168}
-	// if !bytes.Equal(blockchain.LastHash, expectedHash) {
-	// 	t.Errorf("blockchain lastHash expected to be %v, but is %v", expectedHash, blockchain.LastHash)
-	// }
-	// if string(blockchain.Blocks[0].Data) != "Genesis" {
-	// 	t.Errorf("First block must have 'Genesis' data, but it is %s",string(blockchain.Blocks[0].Data))
-	// }
+	// blockchain.Database.View(func(txn *badger.Txn) error {
+	// 	item, err := txn.Get([]byte("lh"))
+	// 	Handle(err)
+	// 	lastHash, err := item.Value()
+	// 	if bytes.Equal(lastHash, []byte{}) {
+	// 		t.Errorf("blockchain lastHash expected to be %v, but is %v", []byte{}, lastHash)
+	// 	}
+	// 	return err
+	// })
 
-	// if string(blockchain.Blocks[1].Data) != data {
-	// 	t.Errorf("Second block data must be  '%s' , but it is %s",data,string(blockchain.Blocks[1].Data))
-	// }
 }
