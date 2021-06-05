@@ -1,11 +1,30 @@
 # Golang Blockchain
 
-### In this tutorial, we add transactions to our blockchain and we talk about inputs and outputs.
+## data model
 
-## Run `go run main.go` to run the app, run `go build main.go` to build an executable file.
+```plantuml
+@startuml
+class BlockChain {
+    Blocks []*Block
+}
 
-### Check out the Youtube Tutorial for this [Go Program](https://youtu.be/HNID8W2jgRM). Here is our [Youtube Channel](https://www.youtube.com/channel/UCYqCZOwHbnPwyjawKfE21wg) Subscribe for more content.
+class Block {
+    Hash []byte
+    Data []byte
+    PrevHash []byte
+    Nonce int
+}
 
-### Check out our blog at [tensor-programming.com](http://tensor-programming.com/).
+BlockChain "1" *-- "*" Block : Blocks
 
-### Our [Twitter](https://twitter.com/TensorProgram), our [facebook](https://www.facebook.com/Tensor-Programming-1197847143611799/) and our [Steemit](https://steemit.com/@tensor).
+class ProofOfWork {
+    Block  *Block
+	Target *big.Int
+    Run() (int, []byte)
+}
+note right of ProofOfWork : Run(): tries to build hashes \n from block with different nounces \n until hash equals target
+
+ProofOfWork  o-- "1" Block : Block
+@enduml
+```
+
