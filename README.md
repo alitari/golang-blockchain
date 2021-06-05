@@ -4,27 +4,80 @@
 
 ```plantuml
 @startuml
-class BlockChain {
-    Blocks []*Block
+
+class blockchain.BlockChain {
+    LastHash []byte
+    Database *badger.DB
+    AddBlock(transactions []*Transaction)
+    Iterator() *BlockChainIterator
+    FindUnspentTransactions(address string) []Transaction
+    FindUTXO(address string) []TxOutput
+    FindSpendableOutputs(address string, amount int)
 }
 
-class Block {
+note left of blockchain.BlockChain::Iterator
+  Access to the blocks in the DB
+end note
+
+class blockchain.BlockChainIterator {
+    CurrentHash []byte
+    Database    *badger.DB
+    Next() *Block
+}
+
+note right of blockchain.BlockChainIterator::Next
+  Get next block from the DB
+end note
+
+class badger.DB << Database >>
+
+
+class blockchain.Block {
     Hash []byte
-    Data []byte
+    Transactions []*Transaction
     PrevHash []byte
     Nonce int
+    HashTransactions() []byte
+    Serialize() []byte
 }
 
-BlockChain "1" *-- "*" Block : Blocks
-
-class ProofOfWork {
-    Block  *Block
-	Target *big.Int
+class blockchain.ProofOfWork {
+    Block *Block
+    Target *big.Int
     Run() (int, []byte)
 }
-note right of ProofOfWork : Run(): tries to build hashes \n from block with different nounces \n until hash equals target
 
-ProofOfWork  o-- "1" Block : Block
+
+blockchain.ProofOfWork -- "1" blockchain.Block : Block
+
+blockchain.BlockChain o-- badger.DB : database
+blockchain.BlockChainIterator o-- badger.DB : database
+blockchain.Block "1" o-- "n" blockchain.Transaction : transaction
+
+class blockchain.Transaction {
+    ID []byte
+    Inputs []TxInput
+    Outputs []TxOutput
+    SetID()
+    IsCoinbase() bool
+}
+
+class blockchain.TxInput {
+    ID []byte
+    Out int
+    Sig string
+    CanUnlock(data string) bool
+}
+
+class blockchain.TxOutput  {
+    Value  int
+    PubKey string
+    CanBeUnlocked(data string) bool
+}
+
+blockchain.Transaction "1" *- "n" blockchain.TxInput : inputs
+blockchain.Transaction "1" *-- "n" blockchain.TxOutput : outputs
+
 @enduml
 ```
 
