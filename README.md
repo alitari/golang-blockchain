@@ -21,7 +21,7 @@ end note
 
 class blockchain.BlockChainIterator {
     CurrentHash []byte
-    Database    *badger.DB
+    Database *badger.DB
     Next() *Block
 }
 
@@ -48,11 +48,11 @@ class blockchain.ProofOfWork {
 }
 
 
-blockchain.ProofOfWork -- "1" blockchain.Block : Block
+blockchain.ProofOfWork --> "1" blockchain.Block : Block
 
-blockchain.BlockChain o-- badger.DB : database
-blockchain.BlockChainIterator o-- badger.DB : database
-blockchain.Block "1" o-- "n" blockchain.Transaction : transaction
+blockchain.BlockChain o--> badger.DB : database
+blockchain.BlockChainIterator o--> badger.DB : database
+blockchain.Block "1" o--> "1..n" blockchain.Transaction : transaction
 
 class blockchain.Transaction {
     ID []byte
@@ -69,15 +69,28 @@ class blockchain.TxInput {
     CanUnlock(data string) bool
 }
 
+
 class blockchain.TxOutput  {
     Value  int
     PubKey string
     CanBeUnlocked(data string) bool
 }
 
-blockchain.Transaction "1" *- "n" blockchain.TxInput : inputs
-blockchain.Transaction "1" *-- "n" blockchain.TxOutput : outputs
+note right of blockchain.TxInput
+  Reference to a previous TxOutput
+end note
 
+note right of blockchain.TxOutput::Value
+  Token to transport
+end note
+
+note right of blockchain.TxOutput::PubKey
+  Address which can unlock the token
+end note
+
+blockchain.Transaction "1" *-> "n" blockchain.TxInput : inputs
+blockchain.Transaction "1" *--> "n" blockchain.TxOutput : outputs
+blockchain.TxInput ..> blockchain.TxOutput : output
 @enduml
 ```
 
