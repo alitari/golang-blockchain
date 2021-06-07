@@ -8,8 +8,8 @@ import (
 	"runtime"
 	"strconv"
 
-	"github.com/tensor-programming/golang-blockchain/blockchain"
-	"github.com/tensor-programming/golang-blockchain/wallet"
+	"github.com/alitari/golang-blockchain/blockchain"
+	"github.com/alitari/golang-blockchain/wallet"
 )
 
 type CommandLine struct{}

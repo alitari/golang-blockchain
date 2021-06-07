@@ -1,4 +1,6 @@
-module github.com/tensor-programming/golang-blockchain
+module github.com/alitari/golang-blockchain
+
+go 1.16
 
 require (
 	github.com/AndreasBriese/bbloom v0.0.0-20180913140656-343706a395b7 // indirect
@@ -7,6 +9,9 @@ require (
 	github.com/golang/protobuf v1.2.0 // indirect
 	github.com/mr-tron/base58 v1.1.0
 	github.com/pkg/errors v0.8.0 // indirect
+	github.com/stretchr/testify v1.7.0 // indirect
 	golang.org/x/crypto v0.0.0-20181030102418-4d3f4d9ffa16
 	golang.org/x/net v0.0.0-20181023162649-9b4f9f5ad519 // indirect
+	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
+	golang.org/x/sys v0.0.0-20210603125802-9665404d3644 // indirect
 )
